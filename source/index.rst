@@ -41,6 +41,7 @@
    :caption: 用户指南
    :name: userguide
 
+   database_Installation
    quickstart
    installation
    configuration

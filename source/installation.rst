@@ -1,54 +1,7 @@
 .. _installation:
 
-安装指南
+MinerU配置
 ========
-
-本章节详细介绍了 HRAG 系统的安装步骤和环境配置。
-
-环境准备
---------
-
-系统要求
-^^^^^^^^^
-
-* **Python**: 3.10 或更高版本
-* **内存**: 至少 8GB RAM
-* **存储**: 至少 10GB 可用空间
-* **GPU**: 推荐 NVIDIA GPU (用于加速处理)
-
-安装步骤
-^^^^^^^^^
-
-1. **创建虚拟环境**
-
-   .. code-block:: bash
-
-      # 安装 uv
-      pip install --upgrade pip
-      pip install uv
-
-      # 使用 uv 创建 h-rag 环境并激活环境
-      uv venv h-rag --python=3.10
-      source h-rag/bin/activate  # On Unix/macOS
-      h-rag\Scripts\activate     # On Windows
-
-2. **安装依赖**
-
-   .. code-block:: bash
-
-      uv pip install -e ".[dev]"
-
-3. **验证安装**
-
-   .. code-block:: bash
-
-      python -c "import torch; print('PyTorch version:', torch.__version__)"
-      python -c "import transformers; print('Transformers version:', transformers.__version__)"
-
-.. note::
-   如果您在安装过程中遇到问题，请查看 :ref:`troubleshooting` 章节。
-
-
 
 
 .. _MinerU_installation:

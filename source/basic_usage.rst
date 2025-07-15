@@ -3,5 +3,191 @@
 基础使用
 ========
 
-本章节介绍了 HRAG 系统的基本使用方法。
+1. 文档解析
+^^^^^^^^^^^^
+
+HRAG 支持两种文档解析方法：MinerU 和 Docling。
+
+使用 MinerU 解析文档
+~~~~~~~~~~~~~~~~~~~~
+.. tip::
+    初次使用 MinerU 请下载对应模型文件，操作指南请查看:安装指南的 :ref:`MinerU_installation` 部分。
+
+单文档解析
+
+.. code-block:: python
+
+    from src.data_parser.mineru_parser import MinerUParser
+    
+    # 初始化解析器
+    parser = MinerUParser()
+    
+    # 解析 PDF 文档
+    pdf_file_name = "src/resources/pdf/XXX.pdf"
+    output_dir = "src/resources/pdf/XXXoutput" # 解析后文件路径
+    parser.process_pdf(pdf_file_name, output_dir)
+
+批量文档解析
+
+.. code-block:: python
+
+    from src.data_parser.mineru_pdf_parser import get_pdf_mineru_info
+    
+    # 解析 PDF 文档
+    input_path = "src/resources/pdf" # PDF 文件路径，（同解析后文件路径）
+    get_pdf_mineru_info(input_path) 
+
+
+使用 Docling 解析文档
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+单文档解析
+
+.. code-block:: python
+    
+    from src.data_parser.docling_pdf_parser import DoclingPDFParser
+
+    # PDF 文件路径
+    pdf_file_name = "src/resources/pdf/XXX.pdf"
+    # 解析后文件路径
+    output_dir = "output"
+
+    # 初始化解析器
+    parser = DoclingPDFParser(pdf_file_name, output_dir)
+    # 解析 PDF 文档
+    parser.process_pdf()
+
+批量文档解析
+
+.. code-block:: python
+
+    from src.data_parser.docling_pdf_parser import get_pdf_docling_info
+    
+    # 解析 PDF 文档（默认为 RAG-Challenge 数据）
+    input_path = "src/resources/data/pdf_reports" 
+    get_pdf_docling_info(input_path) 
+
+
+
+2. 数据转换
+^^^^^^^^^^^^
+
+将解析后的文档转换为向量数据库格式，保存为 PKL：
+
+针对 MinerU 解析的结果的处理
+
+.. code-block:: python
+
+    from src.data_processor.converters.pdf_to_chunk_converter import PDFToChunkConverter
+    
+    # 配置转换器
+    converter = PDFToChunkConverter()
+
+    # 执行转换
+    converter.mineru_convert(
+        input_path="src/resources/pdf",
+        output_path="src/pkl_files/mineru.pkl",
+        image_embedding=False # 是否对图片进行向量化
+    )
+
+针对 Docling 解析的结果
+
+.. code-block:: python
+
+    from src.data_processor.converters.pdf_to_chunk_converter import PDFToChunkConverter
+    
+    # 配置转换器
+    converter = PDFToChunkConverter()
+
+    # 执行转换
+    converter.docling_convert(
+        input_path="src/resources/data/pdf_reports", # 默认为 RAG-Challenge 数据
+        output_path="src/pkl_files/docling.pkl"
+    )
+
+
+3. 知识图谱构建
+^^^^^^^^^^^^^^^^
+
+知识图谱构建提供 HiRAG 与 TRAG 两种方法。两种方法均由：构建实体关系三元组、生成实体关系对应描述、构建知识图谱三部分组成，其中共用同一个构建实体关系三元组方法。
+
+
+构建实体关系三元组：
+
+.. code-block:: python
+
+    from src.data_processor.knowledge_graph.triple_extractor import triple_extractor
+    
+    # 根据MinerU生成的文件得到三元组
+    input_path = "src/resources/pdf"
+    triple_path = "src/resources/temp/knowledge_graph/triple"
+    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
+    triple_extractor(input_path, triple_path, corpus_dir = corpus_path)
+
+
+生成实体关系对应描述：
+
+.. code-block:: python
+
+    # HiRAG 
+    from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
+
+    #根据已有语料库与三元组，提取实体与关系
+    output_path = "src/resources/temp/knowledge_graph"
+    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
+    triple_path = "src/resources/temp/knowledge_graph/triple"
+    entity_relation_extractor(corpus_path, output_path,  method="hirag", triple_path = triple_path)
+
+
+    # TRAG 
+    from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
+
+    #根据已有语料库与三元组，提取实体与关系
+    output_path = "src/resources/temp/knowledge_graph"
+    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
+    triple_path = "src/resources/temp/knowledge_graph/triple"
+    entity_relation_extractor(corpus_path, output_path,  method="trag", triple_path = triple_path)
+
+
+构建知识图谱：
+
+.. code-block:: python
+    
+    # HiRAG
+    from src.data_processor.knowledge_graph.graph_builder import hirag_graph_builder
+
+    # 实体关系三元组等数据构建hirag，并存入working_dir
+    data_path = "src/resources/temp/knowledge_graph/hirag_data"
+    working_dir = "src/resources/temp/knowledge_graph/hirag"  
+    hirag_graph_builder(data_path, working_dir)
+
+    # TRAG
+    from src.data_processor.knowledge_graph.graph_builder import trag_graph_builder
+
+    # 实体关系三元组等数据构建hirag，并存入working_dir
+    data_path = "src/resources/temp/knowledge_graph/trag_data"
+    working_dir = "src/resources/temp/knowledge_graph/trag"  
+    trag_graph_builder(data_path, working_dir)
+
+
+4. 启动服务
+^^^^^^^^^^^^^^^^
+
+启动后端服务进行问答：
+
+.. code-block:: python
+
+    from src.backend.data_search_services import DataSearchService
+    
+    # 启动服务
+    service = DataSearchService()
+    service.start()
+
+.. raw:: html
+
+    <div class="api-endpoint">
+        <h4>API 端点示例</h4>
+        <p><span class="method">POST</span> <span class="url">/api/v1/search</span></p>
+        <p>用于文档检索和问答的 API 端点</p>
+    </div>
 

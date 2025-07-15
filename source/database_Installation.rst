@@ -1,3 +1,5 @@
+.. _database_installation:
+
 数据库安装
 ============
 
@@ -34,6 +36,7 @@ Docker 环境中使用的各种组件的默认版本，通过docker-compose.yml�
 
 
 2. **一键安装数据库**
+
    .. code-block:: bash
 
       # 安装并启动数据库服务

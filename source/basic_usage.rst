@@ -41,34 +41,26 @@ HRAG 支持两种文档解析方法：MinerU 和 Docling。
 
 针对 MinerU 解析的结果的处理
 
-.. code-block:: python
+.. code-block:: bash
 
-    from src.data_processor.converters.pdf_to_chunk_converter import PDFToChunkConverter
-    
-    # 配置转换器
-    converter = PDFToChunkConverter()
-
-    # 执行转换
-    converter.mineru_convert(
-        input_path="src/resources/pdf",
-        output_path="src/pkl_files/mineru.pkl",
-        image_embedding=False # 是否对图片进行向量化
-    )
+    python tests/data_processor/test_data_mineru_converter.py
 
 针对 Docling 解析的结果
 
-.. code-block:: python
+.. code-block:: bash
 
-    from src.data_processor.converters.pdf_to_chunk_converter import PDFToChunkConverter
-    
-    # 配置转换器
-    converter = PDFToChunkConverter()
+    python tests/data_processor/test_data_docling_converter.py \
+        --root_path src/resources/data \
+        --output_path src/pkl_files/challenge_docling.pkl
 
-    # 执行转换
-    converter.docling_convert(
-        input_path="src/resources/data/pdf_reports", # 默认为 RAG-Challenge 数据
-        output_path="src/pkl_files/docling.pkl"
-    )
+Docling 解析数据插入向量数据库
+
+.. code-block:: bash
+
+    python tests/data_processor/test_insert_to_vector_dbs.py \
+        --root_path src/resources/data \
+        --pkl_path src/pkl_files/challenge_docling.pkl \ 
+        --vector_db milvus 
 
 
 3. 知识图谱构建

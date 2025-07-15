@@ -33,6 +33,7 @@ Docker 环境中使用的各种组件的默认版本，通过docker-compose.yml�
 * 修改 kibana 文件夹中的kibana.yml文件，并将elasticsearch.hosts更改为你自己的 IP 地址，并将下面的 elastic 密码更改为您稍后（在第二步中）想要设置的密码。（默认密码为 elastic）。启动服务
 
 
+2. **一键安装数据库**
    .. code-block:: bash
 
       # 安装并启动数据库服务
@@ -46,7 +47,15 @@ Docker 环境中使用的各种组件的默认版本，通过docker-compose.yml�
 * etcd：用于分布式键值存储
 * kibana：用于 elasticsearch 可视化
 
-2. **数据库端口**
+你需要进入 Elasticsearch 容器，在其容器的 exec 中输入命令：
+   .. code-block:: bash
+
+      # 设置密码
+      bin/elasticsearch-setup-passwords interactive
+
+有大约 5 到 6 个账户需要设置他们的密码。建议将所有密码修改为相同的密码。（为保持一致性，我将所有密码都修改为 “elastic”。）
+
+3. **数据库端口**
 
 .. list-table:: 服务端口映射
    :header-rows: 1
@@ -67,3 +76,7 @@ Docker 环境中使用的各种组件的默认版本，通过docker-compose.yml�
    * - MySQL
      - 8080
      - 3306
+
+
+.. note::
+   Front-end Port用于浏览器查看数据服务的可视化界面，Read/Write Port用于数据库的读写操作。

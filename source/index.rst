@@ -60,19 +60,6 @@
    components/knowledge_graph
    components/databases
 
-.. toctree::
-   :maxdepth: 2
-   :caption: API 参考
-   :name: api
-
-   api/data_parser
-   api/data_processor
-   api/knowledge_graph
-   api/retrieval
-   api/generation
-   api/databases
-   api/backend
-   api/frontend
 
 .. toctree::
    :maxdepth: 2

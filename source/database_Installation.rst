@@ -7,7 +7,7 @@
 
 Docker 环境中使用的各种组件的默认版本，通过docker-compose.yml安装。
 
-默认版本:
+默认版本
 ^^^^^^^^^
 * Docker: 4.35.0
 * Elasticsearch: 7.17.1

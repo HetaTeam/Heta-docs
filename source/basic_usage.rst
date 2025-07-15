@@ -71,61 +71,31 @@ Docling 解析数据插入向量数据库
 
 构建实体关系三元组：
 
-.. code-block:: python
+.. code-block:: bash
 
-    from src.data_processor.knowledge_graph.triple_extractor import triple_extractor
-    
-    # 根据MinerU生成的文件得到三元组
-    input_path = "src/resources/pdf"
-    triple_path = "src/resources/temp/knowledge_graph/triple"
-    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
-    triple_extractor(input_path, triple_path, corpus_dir = corpus_path)
+    python tests/data_processor/knowledge_graph/test_get_triple.py
 
 
 生成实体关系对应描述：
 
-.. code-block:: python
+.. code-block:: bash
 
     # HiRAG 
-    from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
-
-    #根据已有语料库与三元组，提取实体与关系
-    output_path = "src/resources/temp/knowledge_graph"
-    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
-    triple_path = "src/resources/temp/knowledge_graph/triple"
-    entity_relation_extractor(corpus_path, output_path,  method="hirag", triple_path = triple_path)
-
+    python tests/data_processor/knowledge_graph/test_get_description_hirag.py
 
     # TRAG 
-    from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
-
-    #根据已有语料库与三元组，提取实体与关系
-    output_path = "src/resources/temp/knowledge_graph"
-    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
-    triple_path = "src/resources/temp/knowledge_graph/triple"
-    entity_relation_extractor(corpus_path, output_path,  method="trag", triple_path = triple_path)
+    python tests/data_processor/knowledge_graph/test_get_description_trag.py
 
 
 构建知识图谱：
 
-.. code-block:: python
-    
-    # HiRAG
-    from src.data_processor.knowledge_graph.graph_builder import graph_builder
+.. code-block:: bash
 
-    # 实体关系三元组等数据构建hirag，并存入working_dir
-    data_path = "src/resources/temp/knowledge_graph/hirag_data"
-    working_dir = "src/resources/temp/knowledge_graph/hirag"  
-    graph_builder(data_path, working_dir,method="hirag")
+    # HiRAG 
+    python tests/data_processor/knowledge_graph/test_create_hirag.py
 
-    # TRAG
-    from src.data_processor.knowledge_graph.graph_builder import graph_builder
-
-    # 实体关系三元组等数据构建hirag，并存入working_dir
-    data_path = "src/resources/temp/knowledge_graph/trag_data"
-    working_dir = "src/resources/temp/knowledge_graph/trag"  
-    graph_builder(data_path, working_dir,method="hirag")
-
+    # TRAG 
+    python tests/data_processor/knowledge_graph/test_create_trag.py
 
 4. 启动服务
 ^^^^^^^^^^^^^^^^

@@ -51,14 +51,13 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: 核心组件
+   :caption: 基础组件
    :name: components
 
    components/data_parser
    components/data_processor
+   components/databases
    components/knowledge_graph
-   components/retrieval
-   components/generation
    components/databases
 
 .. toctree::

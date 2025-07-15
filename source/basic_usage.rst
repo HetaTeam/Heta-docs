@@ -13,60 +13,25 @@ HRAG 支持两种文档解析方法：MinerU 和 Docling。
 .. tip::
     初次使用 MinerU 请下载对应模型文件，操作指南请查看:安装指南的 :ref:`MinerU_installation` 部分。
 
-单文档解析
-
-.. code-block:: python
-
-    from src.data_parser.mineru_parser import MinerUParser
-    
-    # 初始化解析器
-    parser = MinerUParser()
-    
-    # 解析 PDF 文档
-    pdf_file_name = "src/resources/pdf/XXX.pdf"
-    output_dir = "src/resources/pdf/XXXoutput" # 解析后文件路径
-    parser.process_pdf(pdf_file_name, output_dir)
-
 批量文档解析
 
-.. code-block:: python
+.. code-block:: bash
 
-    from src.data_parser.mineru_pdf_parser import get_pdf_mineru_info
-    
-    # 解析 PDF 文档
-    input_path = "src/resources/pdf" # PDF 文件路径，（同解析后文件路径）
-    get_pdf_mineru_info(input_path) 
+    python tests/data_parser/test_mineru_pdf_parser.py --input_path src/resources/pdf
 
+更详细的使用指南见 :ref:`components_data_parser` 
 
 使用 Docling 解析文档
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-单文档解析
-
-.. code-block:: python
-    
-    from src.data_parser.docling_pdf_parser import DoclingPDFParser
-
-    # PDF 文件路径
-    pdf_file_name = "src/resources/pdf/XXX.pdf"
-    # 解析后文件路径
-    output_dir = "output"
-
-    # 初始化解析器
-    parser = DoclingPDFParser(pdf_file_name, output_dir)
-    # 解析 PDF 文档
-    parser.process_pdf()
-
 批量文档解析
 
-.. code-block:: python
+.. code-block:: bash
 
-    from src.data_parser.docling_pdf_parser import get_pdf_docling_info
-    
-    # 解析 PDF 文档（默认为 RAG-Challenge 数据）
-    input_path = "src/resources/data/pdf_reports" 
-    get_pdf_docling_info(input_path) 
+    python tests/data_parser/test_docling_pdf_parser.py --root_path src/resources/test_data
 
+
+更详细的使用指南见 :ref:`components_data_parser` 
 
 
 2. 数据转换
@@ -154,20 +119,20 @@ HRAG 支持两种文档解析方法：MinerU 和 Docling。
 .. code-block:: python
     
     # HiRAG
-    from src.data_processor.knowledge_graph.graph_builder import hirag_graph_builder
+    from src.data_processor.knowledge_graph.graph_builder import graph_builder
 
     # 实体关系三元组等数据构建hirag，并存入working_dir
     data_path = "src/resources/temp/knowledge_graph/hirag_data"
     working_dir = "src/resources/temp/knowledge_graph/hirag"  
-    hirag_graph_builder(data_path, working_dir)
+    graph_builder(data_path, working_dir,method="hirag")
 
     # TRAG
-    from src.data_processor.knowledge_graph.graph_builder import trag_graph_builder
+    from src.data_processor.knowledge_graph.graph_builder import graph_builder
 
     # 实体关系三元组等数据构建hirag，并存入working_dir
     data_path = "src/resources/temp/knowledge_graph/trag_data"
     working_dir = "src/resources/temp/knowledge_graph/trag"  
-    trag_graph_builder(data_path, working_dir)
+    graph_builder(data_path, working_dir,method="hirag")
 
 
 4. 启动服务

@@ -92,6 +92,7 @@
 
    examples/basic_rag
    examples/knowledge_graph
+   examples/rerank
    examples/multi_hop
    examples/custom_components
    examples/integration

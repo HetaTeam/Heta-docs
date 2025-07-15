@@ -28,14 +28,20 @@
 
    .. code-block:: bash
 
-      conda create -n h-rag python=3.10
-      conda activate h-rag
+      # 安装 uv
+      pip install --upgrade pip
+      pip install uv
+
+      # 使用 uv 创建 h-rag 环境并激活环境
+      uv venv h-rag --python=3.10
+      source h-rag/bin/activate  # On Unix/macOS
+      h-rag\Scripts\activate     # On Windows
 
 2. **安装依赖**
 
    .. code-block:: bash
 
-      pip install -r requirements.txt
+      uv pip install -e ".[dev]"
 
 3. **验证安装**
 
@@ -43,6 +49,7 @@
 
       python -c "import torch; print('PyTorch version:', torch.__version__)"
       python -c "import transformers; print('Transformers version:', transformers.__version__)"
+
 
 .. note::
    如果您在安装过程中遇到问题，请查看 :ref:`troubleshooting` 章节。
@@ -156,7 +163,10 @@ HRAG 支持两种文档解析方法：MinerU 和 Docling。
 3. 知识图谱构建
 ^^^^^^^^^^^^^^^^
 
-构建实体关系：
+知识图谱构建提供 HiRAG 与 TRAG 两种方法。两种方法均由：构建实体关系三元组、生成实体关系对应描述、构建知识图谱三部分组成，其中共用同一个构建实体关系三元组方法。
+
+
+构建实体关系三元组：
 
 .. code-block:: python
 
@@ -168,22 +178,50 @@ HRAG 支持两种文档解析方法：MinerU 和 Docling。
     corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
     triple_extractor(input_path, triple_path, corpus_dir = corpus_path)
 
+
+生成实体关系对应描述：
+
+.. code-block:: python
+
+    # HiRAG 
     from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
+
     #根据已有语料库与三元组，提取实体与关系
     output_path = "src/resources/temp/knowledge_graph"
-    entity_relation_extractor(corpus_path, output_path,  gpu_num = 1, triple_path = triple_path)
+    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
+    triple_path = "src/resources/temp/knowledge_graph/triple"
+    entity_relation_extractor(corpus_path, output_path,  method="hirag", triple_path = triple_path)
+
+
+    # TRAG 
+    from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
+
+    #根据已有语料库与三元组，提取实体与关系
+    output_path = "src/resources/temp/knowledge_graph"
+    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
+    triple_path = "src/resources/temp/knowledge_graph/triple"
+    entity_relation_extractor(corpus_path, output_path,  method="trag", triple_path = triple_path)
+
 
 构建知识图谱：
 
 .. code-block:: python
     
-    from src.data_processor.knowledge_graph.graph_builder import graph_builder
-
+    # HiRAG
+    from src.data_processor.knowledge_graph.graph_builder import hirag_graph_builder
 
     # 实体关系三元组等数据构建hirag，并存入working_dir
-    data_path = "src/resources/temp/knowledge_graph"
+    data_path = "src/resources/temp/knowledge_graph/hirag_data"
     working_dir = "src/resources/temp/knowledge_graph/hirag"  
-    graph_builder(data_path, working_dir)
+    hirag_graph_builder(data_path, working_dir)
+
+    # TRAG
+    from src.data_processor.knowledge_graph.graph_builder import trag_graph_builder
+
+    # 实体关系三元组等数据构建hirag，并存入working_dir
+    data_path = "src/resources/temp/knowledge_graph/trag_data"
+    working_dir = "src/resources/temp/knowledge_graph/trag"  
+    trag_graph_builder(data_path, working_dir)
 
 
 4. 启动服务
@@ -215,33 +253,46 @@ HRAG 支持两种文档解析方法：MinerU 和 Docling。
 
 HRAG 支持多种检索策略的组合：
 
-.. code-block:: python
+.. code-block:: bash
 
-    from src.utils.pdf2chuck.hybrid_weighted_retrieval import HybridWeightedRetrieval
-    
-    # 配置混合检索
-    retriever = HybridWeightedRetrieval(
-        vector_weight=0.7,
-        keyword_weight=0.3
-    )
-    
-    # 执行检索
-    results = retriever.retrieve("您的查询问题")
+    # 单条测试
+    python tests/hybrid_retrieval/test_hybrid_weighted_retrieval.py \
+        --single \
+        --company_name "Downer EDI Limited" \
+        --query "Did Downer EDI Limited announce a share buyback plan in the annual report? If there is no mention, return False." \
+        --alpha 0.5 \
+        --top_k 14 \
+        --root_path src/resources/data
+
+    # 批量评测
+    python tests/hybrid_retrieval/test_hybrid_weighted_retrieval.py --alpha 0.5 --top_k 14
+
 
 重排序
 ^^^^^^^^^^^^^^^^
 
 使用重排序技术提高检索精度：
 
-.. code-block:: python
+下载相关模型以及详细的使用方法，请查看 :ref:`rerank` 章节。
 
-    from src.rerank.reranker import Reranker
+.. code-block:: bash
+
     
-    # 初始化重排序器
-    reranker = Reranker(model_name="bge-reranker-large")
+    # 从 huggingface 中下载模型进行重排序
+    # 使用 bge-reranker-large 模型进行重排序
+    python tests/rerank/test_rerank_huggingface.py \
+        --root_path src/resources/data \
+        --parent_document_retrieval \
+        --top_n_retrieval 14 \
+        --vector_db milvus
     
-    # 重排序检索结果
-    reranked_results = reranker.rerank(query, candidates)
+    # 使用 VLLM 部署的模型进行重排序
+    python tests/rerank/test_rerank_VLLM.py \
+        --root_path src/resources/data \
+        --parent_document_retrieval \
+        --top_n_retrieval 14 \
+        --vector_db milvus
+
 
 多跳推理
 ^^^^^^^^^^^^^^^^

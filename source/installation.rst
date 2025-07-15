@@ -23,14 +23,20 @@
 
    .. code-block:: bash
 
-      conda create -n h-rag python=3.10
-      conda activate h-rag
+      # 安装 uv
+      pip install --upgrade pip
+      pip install uv
+
+      # 使用 uv 创建 h-rag 环境并激活环境
+      uv venv h-rag --python=3.10
+      source h-rag/bin/activate  # On Unix/macOS
+      h-rag\Scripts\activate     # On Windows
 
 2. **安装依赖**
 
    .. code-block:: bash
 
-      pip install -r requirements.txt
+      uv pip install -e ".[dev]"
 
 3. **验证安装**
 

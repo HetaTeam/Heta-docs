@@ -63,14 +63,11 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: 开发指南
-   :name: development
+   :caption: 检索方法
+   :name: retrieve
 
-   development/contributing
-   development/architecture
-   development/testing
-   development/deployment
-   development/extending
+   retrieve/data.rst
+   retrieve/pipeline.rst
 
 .. toctree::
    :maxdepth: 2

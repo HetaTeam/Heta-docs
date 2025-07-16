@@ -29,6 +29,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.ifconfig',
     'sphinx.ext.extlinks',
+    'sphinx.ext.graphviz',
     'sphinx_copybutton',
     'sphinx_rtd_theme',
     'myst_parser',

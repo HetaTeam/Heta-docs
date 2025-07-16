@@ -40,6 +40,7 @@ HRAG 支持多种检索策略的组合：
         --parent_document_retrieval \
         --top_n_retrieval 14 \
         --vector_db milvus
+        --rerank_model bge-reranker-large
     
     # 使用 VLLM 部署的模型进行重排序
     python tests/rerank/test_rerank_VLLM.py \

@@ -41,8 +41,8 @@
    :caption: 用户指南
    :name: userguide
 
-   database_Installation
    quickstart
+   database_Installation
    installation
    configuration
    basic_usage
@@ -51,14 +51,15 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: 基础组件
+   :caption: 功能组件
    :name: components
 
    components/data_parser
    components/data_processor
    components/databases
    components/knowledge_graph
-   components/databases
+   components/deepwriter
+   components/multi_hop
 
 
 .. toctree::
@@ -68,6 +69,7 @@
 
    retrieve/data.rst
    retrieve/pipeline.rst
+   retrieve/rank.rst
 
 .. toctree::
    :maxdepth: 2
@@ -80,6 +82,7 @@
    examples/multi_hop
    examples/custom_components
    examples/integration
+   examples/backend.rst
 
 .. toctree::
    :maxdepth: 2

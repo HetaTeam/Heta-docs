@@ -63,48 +63,12 @@ HRAG 支持多种检索策略的组合：
     agent = MultiHopAgent()
     
     # 执行多跳推理
-    answer = agent.answer("需要多步推理的复杂问题")
+    answer = agent.answer(
+        query = "According to the text, what is the key obstacle to enforcing SCM rules on fishing subsidies?",
+        collection_name = "world_trade_report"
+    )
 
-性能优化
---------
+    print(answer)
 
-配置优化
-^^^^^^^^^^^^^^^^
 
-.. code-block:: python
-
-    # 优化配置示例
-    config = {
-        "chunk_size": 512,
-        "chunk_overlap": 50,
-        "batch_size": 32,
-        "max_workers": 4,
-        "cache_dir": "./cache"
-    }
-
-内存优化
-^^^^^^^^^^^^^^^^
-
-.. code-block:: python
-
-    # 内存优化设置
-    import torch
-    
-    # 启用梯度检查点
-    torch.utils.checkpoint.checkpoint_sequential = True
-    
-    # 设置内存分配策略
-    torch.cuda.set_per_process_memory_fraction(0.8)
-
-.. raw:: html
-
-    <div class="performance-metrics">
-        <h4>📈 性能基准</h4>
-        <table>
-            <tr><th>操作</th><th>数据量</th><th>处理时间</th></tr>
-            <tr><td>PDF 解析</td><td>25页</td><td>20秒</td></tr>
-            <tr><td>三元组提取</td><td>100条语料</td><td>50分钟</td></tr>
-            <tr><td>知识图谱构建</td><td>100个实体</td><td>3分钟</td></tr>
-        </table>
-    </div>
 

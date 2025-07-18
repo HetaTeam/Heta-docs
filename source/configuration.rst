@@ -1,19 +1,20 @@
 .. _configuration:
 
-配置指南
-========
+系统参数配置指南
+=================
 
-本章节介绍了 HRAG 系统的各种配置选项。
+本章节介绍了 HRAG 系统的各种系统参数配置选项。
 
 
-配置内容
-^^^^^^^^^
+参数配置内容
+^^^^^^^^^^^^^^^
 
 H-RAG的相关配置均在 `src/config` 中设置，包含了：
 
-* 数据库配置
-* Embedding 模型配置
-* LLM 模型配置
+* 数据库参数配置
+* 后端端口参数配置
+* Embedding 模型参数配置
+* LLM 模型参数配置
 * knowledge_graph 相关参数配置
 
 数据库配置、Embedding 模型配置、LLM 模型配置可直接在 `src/config/config.ini` 中更改
@@ -151,6 +152,31 @@ MySQL
 
 
 
+后端端口配置指南
+^^^^^^^^^^^^^^^^^
+
+本指南说明后端端口配置的格式与使用方法。具体的后端运行实例见 :ref:`examples_backend` 。
+
+**配置文件位置**： ``src/config/config.ini``
+
+配置结构说明
+----------------
+后端端口参数配置均在 ``[backend_api]`` 中，设置每个服务的名称与其对应的端口号。
+
+配置示例
+------------
+
+
+1. **框架选择示例**：
+
+.. code-block:: ini
+
+    [backend_api]
+    data_search_port = 1242
+    deepwriter_port = 1244
+    multi_hop_port = 1246
+
+即运行 ``src/backend/data_search_services.py`` 时，启动的端口为 data_search_port 确定的1242端口。
 
 Embedding 与 LLM 模型配置指南
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -307,4 +333,3 @@ knowledge_graph 相关参数配置指南
      ref_kg_path: src/resources/temp/knowledge_graph/triple_ref_test.txt
 
 
-     

@@ -37,11 +37,17 @@
       source h-rag/bin/activate  # On Unix/macOS
       h-rag\Scripts\activate     # On Windows
 
+      # 或者使用 conda 创建 h-rag 环境并激活环境
+      conda create -n h-rag python=3.10
+      conda activate h-rag
+
+
+
 2. **安装依赖**
 
    .. code-block:: bash
 
-      uv pip install -e ".[dev]"
+      uv pip install -e .
 
 3. **验证安装**
 
@@ -49,6 +55,9 @@
 
       python -c "import torch; print('PyTorch version:', torch.__version__)"
       python -c "import transformers; print('Transformers version:', transformers.__version__)"
+
+.. note::
+   如果您在安装过程中遇到问题，请查看 :ref:`troubleshooting` 章节。
 
 demo示例
 --------
@@ -66,8 +75,7 @@ demo示例
       # 运行其他更多示例
       ...
 
-.. note::
-   如果您在安装过程中遇到问题，请查看 :ref:`troubleshooting` 章节。
+
 
 
 

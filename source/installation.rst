@@ -1,7 +1,7 @@
 .. _installation:
 
 MinerU配置
-========
+=============
 
 
 .. _MinerU_installation:

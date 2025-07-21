@@ -81,7 +81,6 @@
    examples/rerank
    examples/multi_hop
    examples/custom_components
-   examples/integration
    examples/backend.rst
 
 .. toctree::

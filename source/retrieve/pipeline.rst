@@ -148,3 +148,25 @@ PDF解析 --> 报告合并 --> Markdown导出 --> 报告分块 --> 向量化存�
 
    python tests/chunk_test/test_chunk_reports.py --help
 
+测评不同 chunk_size 对应的检索结果
+
+- 使用默认chunk_sizes (128, 256)
+
+.. code-block:: bash
+
+    python tests/chunk_test/test_chunk_size_performance.py \
+        --root_path src/resources/data
+
+- 自定义chunk_sizes
+
+.. code-block:: bash
+    python tests/chunk_test/test_chunk_size_performance.py \
+        --root_path src/resources/data \
+        --chunk_sizes 64 128 256 512
+
+- 测试单个chunk_size
+
+.. code-block:: bash
+    python tests/chunk_test/test_chunk_size_performance.py \
+        --root_path src/resources/data \
+        --chunk_sizes 256

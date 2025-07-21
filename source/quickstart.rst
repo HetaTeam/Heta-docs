@@ -70,7 +70,7 @@ demo示例
       python tests/data_parser/test_mineru_pdf_parser.py
       
       # milvus数据库示例
-      python python tests/database/test_milvus_operations.py
+      python tests/database/test_milvus_operations.py
       
       # 运行其他更多示例
       ...

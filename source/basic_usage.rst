@@ -97,24 +97,29 @@ Docling 解析数据插入向量数据库
     # TRAG 
     python tests/data_processor/knowledge_graph/test_create_trag.py
 
+
 4. 启动服务
 ^^^^^^^^^^^^^^^^
 
 启动后端服务进行问答：
 
-.. code-block:: python
+后端服务包括  **数据检索（data_search）** 、 **论文生成（deepwriter）** 、 **多跳思考（multi_hop）** 。该部分提供后台启动后端服务的命令，服务启动后的输出文件在目录 ``logs/backend/`` 下；对应的端口号配置见 :ref:`backend_configuration` 。
 
-    from src.backend.data_search_services import DataSearchService
-    
-    # 启动服务
-    service = DataSearchService()
-    service.start()
+- 数据检索（data_search）服务:
 
-.. raw:: html
+.. code-block:: bash
 
-    <div class="api-endpoint">
-        <h4>API 端点示例</h4>
-        <p><span class="method">POST</span> <span class="url">/api/v1/search</span></p>
-        <p>用于文档检索和问答的 API 端点</p>
-    </div>
+    nohup python src/backend/data_search_services.py > logs/backend/data_search.out 2>&1 &
+
+- 论文生成（deepwriter）服务:
+
+.. code-block:: bash
+
+    nohup python src/backend/deepwriter_services.py > logs/backend/deepwriter.out 2>&1 &
+
+- 多跳思考（multi_hop）服务:
+
+.. code-block:: bash
+
+    nohup python src/backend/multi_hop_services.py > logs/backend/multi_hop.out 2>&1 &
 

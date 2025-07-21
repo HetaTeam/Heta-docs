@@ -151,11 +151,12 @@ MySQL
 
 
 
+.. _backend_configuration:
 
 后端端口配置指南
 ^^^^^^^^^^^^^^^^^
 
-本指南说明后端端口配置的格式与使用方法。具体的后端运行实例见 :ref:`examples_backend` 。
+本指南说明后端端口配置的格式与使用方法。
 
 **配置文件位置**： ``src/config/config.ini``
 
@@ -166,9 +167,6 @@ MySQL
 配置示例
 ------------
 
-
-1. **框架选择示例**：
-
 .. code-block:: ini
 
     [backend_api]
@@ -177,6 +175,11 @@ MySQL
     multi_hop_port = 1246
 
 即运行 ``src/backend/data_search_services.py`` 时，启动的端口为 data_search_port 确定的1242端口。
+
+.. note::
+    
+    具体的后端运行实例见 :ref:`examples_backend` 。
+
 
 Embedding 与 LLM 模型配置指南
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

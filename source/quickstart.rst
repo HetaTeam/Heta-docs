@@ -56,8 +56,6 @@
       python -c "import torch; print('PyTorch version:', torch.__version__)"
       python -c "import transformers; print('Transformers version:', transformers.__version__)"
 
-.. note::
-   如果您在安装过程中遇到问题，请查看 :ref:`troubleshooting` 章节。
 
 demo示例
 --------

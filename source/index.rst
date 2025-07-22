@@ -47,7 +47,6 @@
    configuration
    basic_usage
    advanced_usage
-   troubleshooting
 
 .. toctree::
    :maxdepth: 2
@@ -82,15 +81,15 @@
    examples/multi_hop
    examples/backend
 
-.. toctree::
-   :maxdepth: 2
-   :caption: 参考文档
-   :name: reference
+.. .. toctree::
+..    :maxdepth: 2
+..    :caption: 参考文档
+..    :name: reference
 
-   reference/glossary
-   reference/faq
-   reference/changelog
-   reference/license
+..    reference/glossary
+..    reference/faq
+..    reference/changelog
+..    reference/license
 
 索引和表格
 ==========

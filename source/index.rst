@@ -80,8 +80,7 @@
    examples/knowledge_graph
    examples/rerank
    examples/multi_hop
-   examples/custom_components
-   examples/backend.rst
+   examples/backend
 
 .. toctree::
    :maxdepth: 2

@@ -6,10 +6,7 @@
 本章节提供了重排序使用示例与说明。
 
 
-使用指南
-========
-
-可以选择直接从 Huggingface 下载对应的 Rerank 模型，或者使用 VLLM 部署已有的 Rerank 模型
+重排序可以选择直接从 Huggingface 下载对应的 Rerank 模型，或者使用 VLLM 部署已有的 Rerank 模型
 
 1. 通过 Huggingface 下载对应的 Rerank 模型
 ------------------------------------------

@@ -260,6 +260,8 @@ Embedding 与 LLM 模型配置指南
    model_name = Qwen2.5-72B-Instruct
 
 
+.. _configuration_knowledge_graph:
+
 knowledge_graph 相关参数配置指南
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -268,6 +270,9 @@ knowledge_graph 相关参数配置指南
 
 **配置文件位置**： ``src/config/knowledge_graph/create_kg_conf.yaml``
 
+.. note::
+    
+    具体的知识图谱构建参数使用见 :ref:`components_knowledge_graph` 。
 
 配置结构说明
 -----------------

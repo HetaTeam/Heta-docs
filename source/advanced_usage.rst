@@ -151,19 +151,8 @@ HRAG 支持 **向量检索** 与 **关键词检索** 策略的组合：
 
 支持多跳推理的智能问答：
 
-.. code-block:: python
+.. code-block:: bash
 
-    from src.multi_hop_agent.src.multi_hop import MultiHopAgent
-    
-    # 初始化多跳代理
-    agent = MultiHopAgent()
-    
-    # 执行多跳推理
-    answer = agent.answer(
-        query = "According to the text, what is the key obstacle to enforcing SCM rules on fishing subsidies?",
-        collection_name = "world_trade_report"
-    )
-
-    print(answer)
+    python tests/multi_hop_agent/test_single_question.py
 
 

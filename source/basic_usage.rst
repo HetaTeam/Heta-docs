@@ -63,7 +63,30 @@ Docling 解析数据插入向量数据库
         --vector_db milvus 
 
 
-3. 知识图谱构建
+
+3. 数据库操作
+^^^^^^^^^^^^^^^^
+
+本项目提供 Elasticsearch、Milvus、MySQL、Neo4j 四种数据库操作。具体安装流程见 :ref:`database_installation`。
+
+.. code-block:: bash
+
+
+    # Elasticsearch
+    python tests/database/test_elastic_operations.py
+
+    # Milvus
+    python tests/database/test_milvus_operations.py
+
+    # MySQL
+    python tests/database/test_mysql_operations.py
+
+    # Neo4j
+    python tests/database/test_neo4j_operation.py
+
+
+
+4. 知识图谱构建
 ^^^^^^^^^^^^^^^^
 
 知识图谱构建提供 HiRAG 与 TRAG 两种方法。两种方法均由：构建实体关系三元组、生成实体关系对应描述、构建知识图谱三部分组成，其中共用同一个构建实体关系三元组方法。
@@ -98,7 +121,7 @@ Docling 解析数据插入向量数据库
     python tests/data_processor/knowledge_graph/test_create_trag.py
 
 
-4. 启动服务
+5. 启动服务
 ^^^^^^^^^^^^^^^^
 
 启动后端服务进行问答：

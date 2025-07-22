@@ -91,21 +91,21 @@
 ..    reference/changelog
 ..    reference/license
 
-索引和表格
-==========
+.. 索引和表格
+.. ==========
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`
 
-.. raw:: html
+.. .. raw:: html
 
-    <div class="hrag-component">
-        <h3>💡 需要帮助？</h3>
-        <p>如果您在使用过程中遇到问题，可以：</p>
-        <ul>
-            <li>查看 <a href="troubleshooting.html">故障排除指南</a></li>
-            <li>阅读 <a href="reference/faq.html">常见问题</a></li>
-            <li>在 <a href="https://github.com/your-github-username/hrag/issues">GitHub Issues</a> 中提交问题</li>
-        </ul>
-    </div>
+..     <div class="hrag-component">
+..         <h3>💡 需要帮助？</h3>
+..         <p>如果您在使用过程中遇到问题，可以：</p>
+..         <ul>
+..             <li>查看 <a href="troubleshooting.html">故障排除指南</a></li>
+..             <li>阅读 <a href="reference/faq.html">常见问题</a></li>
+..             <li>在 <a href="https://github.com/your-github-username/hrag/issues">GitHub Issues</a> 中提交问题</li>
+..         </ul>
+..     </div>

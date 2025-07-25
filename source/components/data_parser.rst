@@ -63,9 +63,15 @@ HRAG 支持两种文档解析方法：MinerU 和 Docling。
 
 .. code-block:: python
 
-    from src.data_parser.docling_pdf_parser import get_pdf_docling_info
+    from src.data_processor.converters.challenge_pipeline import Pipeline
     
     # 解析 PDF 文档（默认为 RAG-Challenge 数据）
     input_path = "src/resources/data/pdf_reports" 
-    get_pdf_docling_info(input_path) 
+    logging.basicConfig(level=logging.INFO)
+    pdf_reports = Path(input_path).name
+    root_path = Path(input_path).parent
+    pipeline = Pipeline(root_path, pdf_reports_dir_name=pdf_reports)
+    pipeline.parse_pdf_reports_sequential() 
+    pipeline.merge_reports() 
+    pipeline.export_reports_to_markdown()
 

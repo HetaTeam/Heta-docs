@@ -5,106 +5,84 @@
 
 本章节详细介绍了 HRAG 系统中的多跳思考组件。其能够处理需要多步推理的复杂问题。该组件通过结合语义检索、信息提取和批判性推理，逐步收集和整合信息，最终生成准确的答案。
 
-下面提供了一个使用 Milvus 查询的实例。需要提供查询问题与对应 Milvus 数据库名称两个参数。
+多跳思考在 MultiHop-RAG 数据集上的使用流程包括四个主要步骤：
 
-.. code-block:: python
+1. 下载并准备多跳数据
+2. 为语料创建向量索引（Milvus）
+3. 进行多跳问答生成
+4. 对生成结果进行评估
 
-    from src.multi_hop_agent.multi_hop import MultiHopAgent
-    
-    # 初始化多跳代理
-    agent = MultiHopAgent()
-    
-    # 执行多跳推理
-    answer = agent.answer(
-        query = "According to the text, what is the key obstacle to enforcing SCM rules on fishing subsidies?",
-        collection_name = "world_trade_report"
-    )
+.. contents:: 内容提要
+   :local:
+   :depth: 2
+
+数据准备
+--------------------
+
+运行以下脚本以下载并保存所需的数据集：
+
+.. code-block:: bash
+
+    python src/multi_hop_agent/data/get_data.py
+
+该脚本将自动从 Hugging Face 下载 `yixuantt/MultiHopRAG` 数据集，并将以下两个文件保存到本地：
+
+- `src/multi_hop_agent/data/MultiHopRAG.json`：用于问答生成与评估的测试集
+- `src/multi_hop_agent/data/corpus.json`：用于构建 Milvus 检索库的语料内容
+
+语料嵌入与索引
+--------------------
+
+语料库需先进行向量化嵌入，并建立 Milvus 索引。执行以下脚本：
+
+.. code-block:: bash
+
+    python src/multi_hop_agent/data/retrieval_corpus.py
+
+该脚本功能包括：
+
+- 使用 EmbeddingProcessor 对 `corpus.json` 中的文本进行语义嵌入
+- 调用 Milvus 接口创建向量集合 `Multi_hop`
+- 分批写入嵌入后的文本块与元信息字段（如标题、作者、时间、类别等）
+- 为向量字段建立默认的 COSINE 索引
+
+问答生成
+--------------------
+
+问答系统基于 Agent 框架自动执行多轮检索与思考。使用以下命令运行生成模块：
+
+.. code-block:: bash
+
+    python src/multi_hop_agent/multi_hop_qa.py
+
+或运行完整流程测试脚本：
+
+.. code-block:: bash
+
+    python tests/test_multi_hop_qa.py
+
+该模块执行以下功能：
+
+- 读取多跳问题文件 `MultiHopRAG.json`
+- 针对每个问题，通过 Milvus 检索相关文本块
+- 自动完成多轮“思考-检索-推理”过程，直到获得最终答案
+- 生成结构化输出并写入 `tests/multi_hop_agent/multi_hop_data/answer.json`，包括模型思路、记忆片段和最终回答
+
+结果评估
+--------------------
+
+完成问答生成后，可以执行以下命令对结果进行评估：
+
+.. code-block:: bash
+
+    python src/multi_hop_agent/qa_evaluate.py
+
+或继续运行测试脚本 `test_multi_hop_qa.py`（已包含评估步骤）：
+
+.. code-block:: bash
+
+    python tests/test_multi_hop_qa.py
 
 
-核心功能
---------
+评估结果会按照问题类型（如 multi-hop、comparison 等）分类展示，同时给出整体平均指标。
 
-1. **多步推理**：通过多次检索和思考，逐步逼近问题的答案。
-2. **信息提取**：从检索到的文档中提取关键信息。
-3. **批判性推理**：对收集到的信息进行综合分析和验证。
-4. **动态调整**：根据中间结果动态调整检索策略。
-
-核心模块
---------
-
-MultiHopAgent
-~~~~~~~~~~~~~
-
-- 入口类，负责初始化并启动多跳推理流程。
-
-- 主要方法：
-
-  - ``answer(query, top_n, score_threshold, max_rounds, collection_name)``: 执行多跳推理，返回答案。
-
-HAgent
-~~~~~~
-- 继承自 ``FnCallAgent`` ，实现ReAct框架的核心逻辑。
-
-- 关键功能：
-
-  - 调用检索工具（RAGRetrieve）获取文档。
-
-  - 提取关键信息并存储到内存中。
-
-  - 通过批判性推理验证信息并生成最终答案。
-
-RAGRetrieve
-~~~~~~~~~~~
-
-- 检索工具，基于Milvus向量数据库实现语义搜索。
-
-- 功能：
-
-  - 根据查询语句检索相关文档。
-
-  - 返回格式化的检索结果。
-
-使用方法
---------
-
-1. 初始化MultiHopAgent：
-
-   .. code-block:: python
-
-      from src.multi_hop_agent.multi_hop import MultiHopAgent
-      agent = MultiHopAgent()
-
-2. 执行多跳推理：
-
-   .. code-block:: python
-
-      answer = agent.answer(
-          query="According to the text, what is the key obstacle to enforcing SCM rules on fishing subsidies?",
-          collection_name="world_trade_report"
-      )
-
-配置参数
---------
-
-- ``query``: 用户输入的问题。
-
-- ``top_n``: 每次检索返回的文档数量（默认14）。
-
-- ``score_threshold``: 检索分数阈值（默认0.0）。
-
-- ``max_rounds``: 最大推理轮次（默认3）。
-
-- ``collection_name``: Milvus集合名称。
-
-示例输出
---------
-
-.. code-block:: json
-
-   [
-       {
-           "thoughts": "Initial reasoning about the query...",
-           "memory": "Extracted information from documents...",
-           "answer": "Final answer after multi-hop reasoning..."
-       }
-   ]

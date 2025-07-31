@@ -111,7 +111,7 @@ Deepwriter
         --root_path src/resources/data \
         --parent_document_retrieval \
         --top_n_retrieval 14 \
-        --vector_db milvus
+        --vector_db milvus \
         --rerank_model bge-reranker-large
     
 - 使用 VLLM 部署的模型进行重排序
@@ -149,10 +149,20 @@ HRAG 支持 **向量检索** 与 **关键词检索** 策略的组合：
 多跳推理
 ^^^^^^^^^^^^^^^^
 
-支持多跳推理的智能问答：
+支持多跳推理的单问题智能问答：
 
 .. code-block:: bash
 
     python tests/multi_hop_agent/test_single_question.py
+
+
+多跳推理在 MultiHop-RAG 数据集上的测试：
+.. tip::
+    初次使用请加载 MultiHop-RAG 数据集，详见:ref:`_components_multi_hop` 部分。
+
+
+.. code-block:: bash
+
+    python tests/multi_hop_agent/test_multi_hop_qa.py
 
 

@@ -59,7 +59,7 @@ Docling 解析数据插入向量数据库
 
     python tests/data_processor/test_insert_to_vector_dbs.py \
         --root_path src/resources/data \
-        --pkl_path src/pkl_files/challenge_docling.pkl \ 
+        --pkl_path src/pkl_files/challenge_docling.pkl \
         --vector_db milvus 
 
 

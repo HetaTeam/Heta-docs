@@ -28,17 +28,18 @@ PDF解析 --> 报告合并 --> Markdown导出 --> 报告分块 --> 向量化存�
 
 .. code-block:: bash
 
-    # 单条测试
+    # 批量评测 - Chunk级别
     python tests/hybrid_retrieval/test_hybrid_weighted_retrieval.py \
-        --single \
-        --company_name "Downer EDI Limited" \
-        --query "Did Downer EDI Limited announce a share buyback plan in the annual report? If there is no mention, return False." \
         --alpha 0.5 \
         --top_k 14 \
-        --root_path src/resources/data
-        
-    # 批量评测
-    python tests/hybrid_retrieval/test_hybrid_weighted_retrieval.py --alpha 0.5 --top_k 14
+        --collection_name "challenge_data"
+
+    # 批量评测 - 页面级别
+    python tests/hybrid_retrieval/test_hybrid_weighted_retrieval.py \
+        --alpha 0.5 \
+        --top_k 14 \
+        --collection_name "challenge_data" \
+        --parent_document_retrieval
 
 该方法实现了向量数据库检索(Milvus or Faiss) 与关键字检索(Elastic) 的混合检索， 参数 alpha 控制向量数据库检索的占比。
 

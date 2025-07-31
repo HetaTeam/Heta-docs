@@ -132,17 +132,12 @@ HRAG 支持 **向量检索** 与 **关键词检索** 策略的组合：
 
 .. code-block:: bash
 
-    # 单条测试
+    # 批量评测
     python tests/hybrid_retrieval/test_hybrid_weighted_retrieval.py \
-        --single \
-        --company_name "Downer EDI Limited" \
-        --query "Did Downer EDI Limited announce a share buyback plan in the annual report? If there is no mention, return False." \
         --alpha 0.5 \
         --top_k 14 \
-        --root_path src/resources/data
-
-    # 批量评测
-    python tests/hybrid_retrieval/test_hybrid_weighted_retrieval.py --alpha 0.5 --top_k 14
+        --collection_name "challenge_data" \
+        --parent_document_retrieval
 
 
 

@@ -194,9 +194,9 @@ Embedding 与 LLM 模型配置指南
 
 1. **框架选择**：
 
-   * 首先需指定使用的框架类型
+   * 需指定使用的框架类型
 
-   * 支持 ``ollama`` 和 ``vllm`` 两种框架
+   * 支持 ``ollama`` 、 ``vllm`` 两种框架
 
 2. **参数设置**：
 
@@ -207,11 +207,14 @@ Embedding 与 LLM 模型配置指南
    * - 参数
      - 示例值
      - 说明
+   * - framework
+     - vllm
+     - 框架类型
    * - host
      - 127.0.0.1
      - 模型服务IP地址（本地部署填127.0.0.1）
    * - port
-     - 11434
+     - 8004
      - 模型服务端口号
    * - model_name
      - qwen2.5:72b
@@ -221,40 +224,34 @@ Embedding 与 LLM 模型配置指南
 ------------
 
 
-1. **框架选择示例**：
-
-.. code-block:: ini
-
-    [embedding_framework]
-    framework = vllm
-
-    [llm_framework]
-    framework = vllm
-
-2. **Ollama 框架示例**：
+1. **Ollama 框架示例**：
 
 .. code-block:: ini
 
    [ollama_embedding]
+   framework = ollama
    host = 127.0.0.1  # 修改为实际IP
    port = 11434
    model_name = bge-m3
 
    [ollama_llm]
+   framework = ollama
    host = 127.0.0.1
    port = 11434 
    model_name = qwen2.5:72b
 
-3. **vLLM 框架示例**：
+2. **vLLM 框架示例**：
 
 .. code-block:: ini
 
    [vllm_embedding]
+   framework = vllm
    host = 127.0.0.1  # 模型服务IP地址
    port = 8001
    model_name = bge-m3
 
    [vllm_llm] 
+   framework = vllm
    host = 127.0.0.1
    port = 8002
    model_name = Qwen2.5-72B-Instruct

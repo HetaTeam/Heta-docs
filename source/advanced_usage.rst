@@ -141,23 +141,22 @@ HRAG 支持 **向量检索** 与 **关键词检索** 策略的组合：
 
 
 
-多跳推理
-^^^^^^^^^^^^^^^^
+深度搜索(DeepSearch)
+^^^^^^^^^^^^^^^^^^^^^^^
 
-支持多跳推理的单问题智能问答：
+支持深度搜索的单问题智能问答：
 
 .. code-block:: bash
 
-    python tests/multi_hop_agent/test_single_question.py
+    python tests/deepsearch/test_single_question.py
 
-
-多跳推理在 MultiHop-RAG 数据集上的测试：
+深度搜索可视化展示：
 .. tip::
-    初次使用请加载 MultiHop-RAG 数据集，详见:ref:`_components_multi_hop` 部分。
+    初次使用请安装相关库，详见:ref:`_examples_deepsearch` 部分。
 
 
 .. code-block:: bash
 
-    python tests/multi_hop_agent/test_multi_hop_qa.py
+    streamlit run tests/deepsearch/test_deepsearch.py
 
 

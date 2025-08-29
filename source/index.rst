@@ -58,7 +58,7 @@
    components/databases
    components/knowledge_graph
    components/deepwriter
-   components/multi_hop
+   components/deepsearch
 
 
 .. toctree::
@@ -78,7 +78,7 @@
    examples/basic_rag
    examples/knowledge_graph
    examples/rerank
-   examples/multi_hop
+   examples/deepsearch
    examples/backend
 
 .. .. toctree::

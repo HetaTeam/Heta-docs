@@ -1,11 +1,11 @@
-.. _components_multi_hop:
+.. _components_deepsearch:
 
-多跳思考
+深度搜索
 ==============
 
-本章节详细介绍了 HRAG 系统中的多跳思考组件。其能够处理需要多步推理的复杂问题。该组件通过结合语义检索、信息提取和批判性推理，逐步收集和整合信息，最终生成准确的答案。
+本章节详细介绍了 HRAG 系统中的深度搜索组件在 MultiHop-RAG 数据集上的使用。其能够处理需要多步推理的复杂问题。该组件通过结合语义检索、信息提取和批判性推理，逐步收集和整合信息，最终生成准确的答案。
 
-多跳思考在 MultiHop-RAG 数据集上的使用流程包括四个主要步骤：
+深度搜索在 MultiHop-RAG 数据集上的使用流程包括四个主要步骤：
 
 1. 下载并准备多跳数据
 2. 为语料创建向量索引（Milvus）
@@ -23,12 +23,12 @@
 
 .. code-block:: bash
 
-    python src/multi_hop_agent/data/get_data.py
+    python src/deepsearch/data/get_data.py
 
 该脚本将自动从 Hugging Face 下载 `yixuantt/MultiHopRAG` 数据集，并将以下两个文件保存到本地：
 
-- `src/multi_hop_agent/data/MultiHopRAG.json`：用于问答生成与评估的测试集
-- `src/multi_hop_agent/data/corpus.json`：用于构建 Milvus 检索库的语料内容
+- `src/deepsearch/data/MultiHopRAG.json`：用于问答生成与评估的测试集
+- `src/deepsearch/data/corpus.json`：用于构建 Milvus 检索库的语料内容
 
 语料嵌入与索引
 --------------------
@@ -37,7 +37,7 @@
 
 .. code-block:: bash
 
-    python src/multi_hop_agent/data/retrieval_corpus.py
+    python src/deepsearch/data/retrieval_corpus.py
 
 该脚本功能包括：
 
@@ -53,7 +53,7 @@
 
 .. code-block:: bash
 
-    python src/multi_hop_agent/multi_hop_qa.py
+    python src/deepsearch/multi_hop_qa.py
 
 或运行完整流程测试脚本：
 
@@ -66,7 +66,7 @@
 - 读取多跳问题文件 `MultiHopRAG.json`
 - 针对每个问题，通过 Milvus 检索相关文本块
 - 自动完成多轮“思考-检索-推理”过程，直到获得最终答案
-- 生成结构化输出并写入 `tests/multi_hop_agent/multi_hop_data/answer.json`，包括模型思路、记忆片段和最终回答
+- 生成结构化输出并写入 `tests/deepsearch/multi_hop_data/answer.json`，包括模型思路、记忆片段和最终回答
 
 结果评估
 --------------------
@@ -75,7 +75,7 @@
 
 .. code-block:: bash
 
-    python src/multi_hop_agent/qa_evaluate.py
+    python src/deepsearch/qa_evaluate.py
 
 或继续运行测试脚本 `test_multi_hop_qa.py`（已包含评估步骤）：
 

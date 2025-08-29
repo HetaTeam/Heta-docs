@@ -13,49 +13,37 @@
 
 其中两种方法共用同一个构建实体关系三元组的方法。对应的参数设置见 :ref:`configuration_knowledge_graph`
 
-构建实体关系三元组：
+从语料中抽取实体关系：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-使用代码：
+提供两种抽取实体关系的方法
+
+1. ConmmonKG方法，使用代码：
 
 .. code-block:: python
 
-    from src.data_processor.knowledge_graph.triple_extractor import triple_extractor
-    
+    from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
+
+
     # 根据MinerU生成的文件得到三元组
-    input_path = "src/resources/pdf"
-    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
-    triple_path = "src/resources/temp/knowledge_graph/triple"
-    triple_extractor(input_path, triple_path, corpus_dir = corpus_path)
-
-
-
-
-生成实体关系对应描述：
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    mineru_path = "src/resources/pdf"
+    output_path = "src/resources/temp/knowledge_graph/commonkg"
+    entity_relation_extractor(mineru_path, output_path, corpus_dir = corpus_path, method="CommonKG")
+   
+   
+2. GraphRAG方法，使用代码：
 
 .. code-block:: python
 
-    # HiRAG 
     from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
 
-    #根据已有语料库与三元组，提取实体与关系的描述
-    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
 
-    output_path = "src/resources/temp/knowledge_graph/hirag_data"
-    triple_path = "src/resources/temp/knowledge_graph/triple"
-    entity_relation_extractor(corpus_path, output_path,  method="hirag", triple_path = triple_path)
+    # 根据MinerU生成的文件得到三元组
+    mineru_path = "src/resources/pdf"
+    output_path = "src/resources/temp/knowledge_graph/graphrag"
+    entity_relation_extractor(mineru_path, output_path, method="graphrag")
 
 
-    # TRAG 
-    from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
-
-    #根据已有语料库与三元组，提取实体与关系的描述
-    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
-
-    output_path = "src/resources/temp/knowledge_graph/trag_data"
-    triple_path = "src/resources/temp/knowledge_graph/triple"
-    entity_relation_extractor(corpus_path, output_path,  method="trag", triple_path = triple_path)
 
 
 构建知识图谱：
@@ -67,14 +55,16 @@
     from src.data_processor.knowledge_graph.graph_builder import graph_builder
 
     # 实体关系三元组等数据构建hirag，并存入working_dir
-    data_path = "src/resources/temp/knowledge_graph/hirag_data"
+   
+    # 选择合适的实体关系提取方法
+    data_path = "src/resources/temp/knowledge_graph/graphrag" # or "src/resources/temp/knowledge_graph/commonkg"
     working_dir = "src/resources/temp/knowledge_graph/hirag"  
     graph_builder(data_path, working_dir,method="hirag")
 
-    # TRAG
+    # LearnRAG
     from src.data_processor.knowledge_graph.graph_builder import graph_builder
 
-   # 实体关系三元组等数据构建trag，并存入working_dir
+   # 实体关系三元组等数据构建learnrag，并存入working_dir
     data_path = "src/resources/temp/knowledge_graph/trag_data"
     working_dir = "src/resources/temp/knowledge_graph/trag"  
     graph_builder(data_path, working_dir,method="trag")

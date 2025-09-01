@@ -107,7 +107,7 @@ Docling 解析数据插入向量数据库
     python tests/data_processor/knowledge_graph/test_create_hirag.py
 
     # TRAG 
-    python tests/data_processor/knowledge_graph/test_create_trag.py
+    python tests/data_processor/knowledge_graph/test_create_learnrag.py
 
 
 5. 启动服务

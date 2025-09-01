@@ -151,8 +151,8 @@ HRAG 支持 **向量检索** 与 **关键词检索** 策略的组合：
     python tests/deepsearch/test_single_question.py
 
 深度搜索可视化展示：
-.. tip::
-    初次使用请安装相关库，详见:ref:`_examples_deepsearch` 部分。
+
+初次使用请安装相关库，详见: :ref:`examples_deepsearch` 部分。
 
 
 .. code-block:: bash

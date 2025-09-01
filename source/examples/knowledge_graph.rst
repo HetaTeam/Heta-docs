@@ -6,100 +6,113 @@
 本章节提供了 HiRAG 与 TRAG 两种方法的知识图谱构建和使用的示例。
 
 
-两种方法均由：构建实体关系三元组、生成实体关系对应描述、构建知识图谱三部分组成，其中共用同一个构建实体关系三元组方法。
+两种方法均由：实体-关系三元组抽取、知识图谱构建、基于图的回答三个阶段构成。其中，实体-关系三元组抽取提供了CommonKG、GraphRAG两种三元组抽取方法。
 
 
 构建实体关系三元组：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-将 MinerU 处理后的结果加载为语料，根据语料构建实体关系三元组：
+将 MinerU 处理后的结果提取实体关系三元组：
+
 
 .. code-block:: python
 
-    from src.data_processor.knowledge_graph.triple_extractor import triple_extractor
+    from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
     
     # 根据MinerU生成的文件得到三元组
-    input_path = "src/resources/pdf"
-    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
-    triple_path = "src/resources/temp/knowledge_graph/triple"
-    triple_extractor(input_path, triple_path, corpus_dir = corpus_path)
-
-
-**参数说明：**
-
-- input_path ： 输入文件的路径，包含需要处理的原始文档与 MinerU 解析后的结果。
-
-- corpus_path ： 语料库路径，MinerU 解析后的结果会处理成语料以便生成三元组。
-
-- triple_path ： 构建三元组保存路径。
-
-
-
-
-生成实体关系对应描述：
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-根据已有语料库与三元组，生成实体关系的对应描述。其中 TRAG 方法还会首先生成对应的六元组，在进行实体关系描述的生成。
-
-.. code-block:: python
-
-    # HiRAG 
-    from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
-
-    #根据已有语料库与三元组，提取实体与关系的描述
-    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
-
-    output_path = "src/resources/temp/knowledge_graph/hirag_data"
-    triple_path = "src/resources/temp/knowledge_graph/triple"
-    entity_relation_extractor(corpus_path, output_path,  method="hirag", triple_path = triple_path)
-
-
-    # TRAG 
-    from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
-
-    #根据已有语料库与三元组，提取实体与关系的描述
-    corpus_path = "src/resources/temp/knowledge_graph/corpus"  #语料库路径
-
-    output_path = "src/resources/temp/knowledge_graph/trag_data"
-    triple_path = "src/resources/temp/knowledge_graph/triple"
-    entity_relation_extractor(corpus_path, output_path,  method="trag", triple_path = triple_path)
-
-
-**参数说明：**
-
-- output_path ： 输出文件的路径，生成的实体关系描述保存路径。
-
-- corpus_path ： 语料库路径，MinerU 解析后的结果会处理成语料以便生成三元组。
-
-- triple_path ： 构建三元组保存路径。TRAG 方法生成的六元组也保存在这里。
-
-
-构建知识图谱：
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-根据生成的实体关系描述，构建知识图谱。
-
-.. code-block:: python
+    mineru_path = "src/resources/pdf"
     
-    # HiRAG
-    from src.data_processor.knowledge_graph.graph_builder import graph_builder
+    # GraphRAG方法提取
+    output_path = "src/resources/temp/knowledge_graph/graphrag"
+    entity_relation_extractor(mineru_path, output_path, method="graphrag")
+    
 
-    # 实体关系三元组等数据构建hirag，并存入working_dir
-    data_path = "src/resources/temp/knowledge_graph/hirag_data"
-    working_dir = "src/resources/temp/knowledge_graph/hirag"  
-    graph_builder(data_path, working_dir,method="hirag")
+.. code-block:: python
 
-    # TRAG
-    from src.data_processor.knowledge_graph.graph_builder import graph_builder
+    from src.data_processor.knowledge_graph.entity_relation_extractor import entity_relation_extractor
+    
+    # 根据MinerU生成的文件得到三元组
+    mineru_path = "src/resources/pdf"
 
-   # 实体关系三元组等数据构建trag，并存入working_dir
-    data_path = "src/resources/temp/knowledge_graph/trag_data"
-    working_dir = "src/resources/temp/knowledge_graph/trag"  
-    graph_builder(data_path, working_dir,method="trag")
+    # CommonKG方法提取
+    output_path = "src/resources/temp/knowledge_graph/commonkg"
+    entity_relation_extractor(mineru_path, output_path, method="CommonKG")
 
 
 **参数说明：**
 
-- data_path ： 构建知识图谱所需的数据，即生成实体关系描述的结果。
+- ``mineru_path``: MinerU解析后的PDF文件路径
+- ``output_path``: 三元组数据保存路径
+- ``method``: 提取方法，可选 "graphrag" 或 "CommonKG"，任选一种即可
 
-- working_dir ：构建好的知识图谱保存路径。
+
+构建知识图谱
+~~~~~~~~~~~~~~
+
+根据提取的三元组数据构建知识图谱：
+
+HiRAG 构建
+^^^^^^^^^^
+
+.. code-block:: python
+
+    from src.data_processor.knowledge_graph.graph_builder import graph_builder
+    
+    # 实体关系三元组数据构建hirag
+    data_path = "src/resources/temp/knowledge_graph/graphrag"
+    working_dir = "src/resources/temp/knowledge_graph/hirag"  
+    graph_builder(data_path, working_dir, method="hirag")
+
+LearnRAG 构建
+^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from src.data_processor.knowledge_graph.graph_builder import graph_builder
+    
+    # 实体关系三元组数据构建learnrag
+    data_path = "src/resources/temp/knowledge_graph/graphrag"
+    working_dir = "src/resources/temp/knowledge_graph/learnrag"  
+    graph_builder(data_path, working_dir, method="learnrag")
+
+**参数说明：**
+
+- ``data_path``: 三元组数据路径
+- ``working_dir``: 构建好的知识图谱保存路径
+- ``method``: 构建方法，可选 "hirag" 或 "learnrag"
+
+
+查询知识图谱
+~~~~~~~~~~~~
+
+对构建好的知识图谱进行查询：
+
+HiRAG 查询
+^^^^^^^^^^
+
+.. code-block:: python
+
+    from src.data_processor.knowledge_graph.query_graph import query_graph
+    
+    query = "Which leadership positions changed at Datalogic in the reporting period?"
+    working_dir = "src/resources/temp/knowledge_graph/hirag"  
+    result = query_graph(query, working_dir, method="hirag")
+    print(result)
+
+LearnRAG 查询
+^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from src.data_processor.knowledge_graph.query_graph import query_graph
+    
+    query = "Which leadership positions changed at Datalogic in the reporting period?"
+    working_dir = "src/resources/temp/knowledge_graph/learnrag"  
+    result = query_graph(query, working_dir, method="learnrag")
+    print(result)
+
+**参数说明：**
+
+- ``query``: 查询问题
+- ``working_dir``: 知识图谱保存路径
+- ``method``: 查询方法，与构建方法对应

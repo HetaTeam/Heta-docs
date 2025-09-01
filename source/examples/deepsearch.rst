@@ -80,7 +80,7 @@ RAG检索工具
 
 系统支持多种类型的多跳查询，例如：
 
-特斯拉相关查询
+相关查询
 ~~~~~~~~~~~~~~
 
 .. code-block:: python
@@ -132,35 +132,8 @@ RAG检索工具
 - 检索过程可视化
 - 最终答案展示
 
-高级功能
---------
+下图展示了应用程序的主界面：
 
-并行内容抓取
-~~~~~~~~~~~~
-
-系统支持并行抓取多个URL的内容：
-
-.. code-block:: python
-
-    async def fetch_all_urls(urls, screenshot=True):
-        tasks = [get_info(url, screenshot) for url in urls]
-        results = await asyncio.gather(*tasks)
-        return results
-
-语义相似度计算
-~~~~~~~~~~~~~~
-
-使用余弦相似度进行文档检索：
-
-.. code-block:: python
-
-    similarities = F.cosine_similarity(
-        query_embedding.unsqueeze(0), 
-        document_embeddings_tensor, 
-        dim=1
-    )
-
-总结
-----
-
-该深度搜索示例展示了如何结合RAG技术和网络搜索来处理复杂的问题。系统通过迭代检索和推理过程，能够回答需要多个信息检索步骤的复杂查询。
+.. figure:: /_static/deepsearchqa.jpg
+   :alt: 应用程序主界面截图
+   :width: 50%

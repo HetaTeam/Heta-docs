@@ -100,16 +100,16 @@ deepwriter_services.py
     }
 
 
-multi_hop_services.py
+deepsearch_services.py
 ---------------------
 
-多跳问答服务，支持通过多轮检索和推理回答复杂问题。
+深度搜索服务，支持通过多轮检索和推理回答复杂问题。
 
 **功能描述**:
 
 - 提供基于RAG的文档检索功能
 
-- 支持多跳问答流程，可组合多个工具进行信息检索
+- 支持深度搜索流程，可组合多个工具进行信息检索
 
 - 包含网页搜索功能，可获取网页内容并解析
 
@@ -130,14 +130,14 @@ multi_hop_services.py
      - 从Milvus向量数据库检索相关文档
    * - ``/multi_hop_qa``
      - POST
-     - 执行多跳问答流程，组合多个工具获取最终答案
+     - 执行深度搜索流程，组合多个工具获取最终答案
 
 .. raw:: html
 
     <div class="api-endpoint">
         <h5>API 端点示例</h5>
         <p><span class="method">POST</span> <span class="url">http://0.0.0.0:1246/multi_hop_qa</span></p>
-        <p>用于执行多跳问答流程的 API 端点</p>
+        <p>用于执行深度搜索流程的 API 端点</p>
     </div>
 
 
@@ -146,7 +146,7 @@ multi_hop_services.py
 .. code-block:: json
 
     {
-        "query": "多跳问题示例",
+        "query": "question for deepsearch",
         "max_rounds": 3,
         "selected_tools": ["rag_retrieve"],
         "retrieval_setting": {

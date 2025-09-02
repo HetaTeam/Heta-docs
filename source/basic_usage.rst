@@ -115,7 +115,7 @@ Docling 解析数据插入向量数据库
 
 启动后端服务进行问答：
 
-后端服务包括  **数据检索（data_search）** 、 **论文生成（deepwriter）** 、 **多跳思考（multi_hop）** 。该部分提供后台启动后端服务的命令，服务启动后的输出文件在目录 ``logs/backend/`` 下；对应的端口号配置见 :ref:`backend_configuration` 。
+后端服务包括  **数据检索（data_search）** 、 **论文生成（deepwriter）** 、 **深度搜索（deepsearch）** 。该部分提供后台启动后端服务的命令，服务启动后的输出文件在目录 ``logs/backend/`` 下；对应的端口号配置见 :ref:`backend_configuration` 。
 
 - 数据检索（data_search）服务:
 
@@ -129,9 +129,9 @@ Docling 解析数据插入向量数据库
 
     nohup python src/backend/deepwriter_services.py > logs/backend/deepwriter.out 2>&1 &
 
-- 多跳思考（multi_hop）服务:
+- 深度搜索（deepsearch）服务:
 
 .. code-block:: bash
 
-    nohup python src/backend/multi_hop_services.py > logs/backend/multi_hop.out 2>&1 &
+    nohup python src/backend/deepsearch_services.py > logs/backend/deepsearch.out 2>&1 &
 

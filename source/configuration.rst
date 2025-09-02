@@ -172,7 +172,7 @@ MySQL
     [backend_api]
     data_search_port = 1242
     deepwriter_port = 1244
-    multi_hop_port = 1246
+    deepsearch_port = 1246
 
 即运行 ``src/backend/data_search_services.py`` 时，启动的端口为 data_search_port 确定的1242端口。
 

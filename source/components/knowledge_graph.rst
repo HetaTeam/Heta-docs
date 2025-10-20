@@ -5,7 +5,7 @@
 
 本章节详细介绍了 HRAG 系统中的知识图谱组件。
 
-知识图谱构建提供 HiRAG 与 TRAG 两种方法。两种方法均由以下三部分组成：
+知识图谱构建提供 HiRAG 与 LeanRAG 两种方法。两种方法均由以下三部分组成：
 
 1. 构建实体关系三元组
 2. 生成实体关系对应描述
@@ -61,10 +61,10 @@
     working_dir = "src/resources/temp/knowledge_graph/hirag"  
     graph_builder(data_path, working_dir,method="hirag")
 
-    # LearnRAG
+    # LeanRAG
     from src.data_processor.knowledge_graph.graph_builder import graph_builder
 
-    # 实体关系三元组等数据构建learnrag，并存入working_dir
+    # 实体关系三元组等数据构建leanrag，并存入working_dir
     data_path = "src/resources/temp/knowledge_graph/trag_data"
     working_dir = "src/resources/temp/knowledge_graph/trag"  
     graph_builder(data_path, working_dir,method="trag")
@@ -83,12 +83,12 @@
     result = query_graph(query, working_dir, method="hirag")
     print(result)
 
-    # LearnRAG
+    # LeanRAG
     from src.data_processor.knowledge_graph.query_graph import query_graph
     
     query = "Which leadership positions changed at Datalogic in the reporting period?"
-    working_dir = "src/resources/temp/knowledge_graph/learnrag"  
-    result = query_graph(query, working_dir, method="learnrag")
+    working_dir = "src/resources/temp/knowledge_graph/leanrag"  
+    result = query_graph(query, working_dir, method="leanrag")
     print(result)
 
 
